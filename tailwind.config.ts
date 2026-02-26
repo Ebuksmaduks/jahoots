@@ -13,7 +13,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        game: ["Poppins", "Segoe UI", "Inter", "sans-serif"],
+      },
       colors: {
+        gold: "hsl(var(--gold))",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -47,6 +51,10 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "option-a": "hsl(var(--option-a))",
+        "option-b": "hsl(var(--option-b))",
+        "option-c": "hsl(var(--option-c))",
+        "option-d": "hsl(var(--option-d))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
