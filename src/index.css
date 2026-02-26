@@ -1,10 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
 
 @layer base {
   :root {
@@ -17,8 +15,13 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Nigerian Green */
+    --primary: 155 100% 26%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Gold */
+    --gold: 51 100% 50%;
+    --gold-foreground: 0 0% 0%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -26,63 +29,54 @@ All colors MUST be HSL.
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 51 100% 50%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 155 100% 26%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Custom game tokens */
+    --option-a: 217 91% 60%;
+    --option-b: 24 100% 55%;
+    --option-c: 142 71% 45%;
+    --option-d: 262 83% 58%;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 155 50% 8%;
     --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
+    --card: 155 40% 10%;
     --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
+    --popover: 155 40% 10%;
     --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
+    --primary: 155 100% 36%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
+    --accent: 51 100% 50%;
+    --accent-foreground: 0 0% 0%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 155 100% 36%;
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -101,5 +95,82 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Poppins', 'Segoe UI', 'Inter', sans-serif;
   }
+}
+
+@layer utilities {
+  .font-game {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+  }
+
+  .bg-naija {
+    background: linear-gradient(135deg, hsl(155 100% 26%) 0%, hsl(155 100% 18%) 100%);
+  }
+
+  .bg-gold-shine {
+    background: linear-gradient(135deg, hsl(51 100% 50%) 0%, hsl(40 100% 50%) 100%);
+  }
+
+  .text-gold {
+    color: hsl(51 100% 50%);
+  }
+
+  .border-gold {
+    border-color: hsl(51 100% 50%);
+  }
+
+  .shadow-naija {
+    box-shadow: 0 8px 32px hsl(155 100% 26% / 0.3);
+  }
+
+  .shadow-gold {
+    box-shadow: 0 8px 32px hsl(51 100% 50% / 0.4);
+  }
+
+  .animate-bounce-in {
+    animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .animate-pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  .animate-countdown {
+    animation: countdown 1s linear;
+  }
+
+  .option-a { background: hsl(var(--option-a)); }
+  .option-b { background: hsl(var(--option-b)); }
+  .option-c { background: hsl(var(--option-c)); }
+  .option-d { background: hsl(var(--option-d)); }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px hsl(51 100% 50% / 0.4); }
+  50% { box-shadow: 0 0 40px hsl(51 100% 50% / 0.8); }
+}
+
+@keyframes countdown {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: 283; }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.confetti-piece {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  animation: confetti-fall linear forwards;
 }
