@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { QUESTIONS, OPTION_LABELS, OPTION_COLORS } from "@/lib/questions";
+import { CATEGORY_QUESTIONS, OPTION_LABELS, OPTION_COLORS, CATEGORIES, type Question } from "@/lib/questions";
 import Timer from "@/components/Timer";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 
@@ -20,17 +20,26 @@ export default function HostGame() {
   const [answeredCount, setAnsweredCount] = useState(0);
   const [timerRunning, setTimerRunning] = useState(true);
   const [gameCode, setGameCode] = useState("");
-
-  const question = QUESTIONS[currentQ];
-  const isLastQuestion = currentQ >= QUESTIONS.length - 1;
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [categoryLabel, setCategoryLabel] = useState("");
 
   useEffect(() => {
     if (!gameId) return;
-    supabase.from("games").select("code").eq("id", gameId).single().then(({ data }) => {
-      if (data) setGameCode(data.code);
+    supabase.from("games").select("code, category").eq("id", gameId).single().then(({ data }) => {
+      if (data) {
+        setGameCode(data.code);
+        const qs = CATEGORY_QUESTIONS[data.category] ?? CATEGORY_QUESTIONS["nollywood"];
+        setQuestions(qs);
+        const cat = CATEGORIES.find((c) => c.id === data.category);
+        setCategoryLabel(cat ? `${cat.emoji} ${cat.label}` : "");
+      }
     });
     fetchPlayers();
   }, [gameId]);
+
+  const question = questions[currentQ];
+  const totalQuestions = questions.length;
+  const isLastQuestion = currentQ >= totalQuestions - 1;
 
   const fetchPlayers = useCallback(async () => {
     if (!gameId) return;
@@ -89,6 +98,8 @@ export default function HostGame() {
     }
   };
 
+  if (!question) return null;
+
   if (showLeaderboard) {
     return (
       <div className="min-h-screen bg-naija flex flex-col items-center justify-center px-4 py-8">
@@ -97,7 +108,7 @@ export default function HostGame() {
             Leaderboard 🏆
           </h2>
           <p className="text-white/70 text-center mb-6">
-            Question {currentQ + 1} of {QUESTIONS.length}
+            Question {currentQ + 1} of {totalQuestions}
           </p>
           <div className="bg-white rounded-3xl shadow-2xl p-6 mb-6 space-y-3">
             {players.slice(0, 8).map((p, i) => (
@@ -136,8 +147,9 @@ export default function HostGame() {
           <span className="text-white font-bold text-sm">Code: </span>
           <span className="text-gold font-black text-lg tracking-widest">{gameCode}</span>
         </div>
-        <div className="text-white font-bold">
-          Q {currentQ + 1}/{QUESTIONS.length}
+        <div className="text-white font-bold text-center">
+          <div>Q {currentQ + 1}/{totalQuestions}</div>
+          {categoryLabel && <div className="text-xs text-white/70">{categoryLabel}</div>}
         </div>
         <div className="bg-white/20 rounded-xl px-4 py-2 text-white font-bold text-sm">
           {answeredCount}/{players.length} answered

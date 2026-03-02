@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { QUESTIONS, OPTION_LABELS, OPTION_COLORS, QUESTION_TIME } from "@/lib/questions";
+import { CATEGORY_QUESTIONS, OPTION_LABELS, OPTION_COLORS, QUESTION_TIME, type Question } from "@/lib/questions";
 import { calculatePoints } from "@/lib/gameUtils";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 
@@ -20,24 +20,27 @@ export default function PlayerGame() {
   const [playerName, setPlayerName] = useState("");
   const [timeExpired, setTimeExpired] = useState(false);
   const [timeLeft, setTimeLeft] = useState(QUESTION_TIME);
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [totalQuestions, setTotalQuestions] = useState(10);
 
   useEffect(() => {
     if (!gameId || !playerId) return;
 
-    // Fetch player name and current game state
     supabase.from("players").select("name, score").eq("id", playerId).single().then(({ data }) => {
       if (data) { setPlayerName(data.name); setTotalScore(data.score); }
     });
 
-    supabase.from("games").select("status, current_question_index, question_started_at").eq("id", gameId).single().then(({ data }) => {
+    supabase.from("games").select("status, current_question_index, question_started_at, category").eq("id", gameId).single().then(({ data }) => {
       if (data) {
         setGameStatus(data.status as GameStatus);
         setCurrentQ(data.current_question_index ?? 0);
         setQuestionStartedAt(data.question_started_at);
+        const qs = CATEGORY_QUESTIONS[data.category] ?? CATEGORY_QUESTIONS["nollywood"];
+        setQuestions(qs);
+        setTotalQuestions(qs.length);
       }
     });
 
-    // Subscribe to game updates
     const channel: RealtimeChannel = supabase
       .channel(`player-game-${gameId}-${playerId}`)
       .on(
@@ -64,7 +67,6 @@ export default function PlayerGame() {
     return () => { supabase.removeChannel(channel); };
   }, [gameId, playerId]);
 
-  // Also listen for game finish after question changes
   useEffect(() => {
     if (!gameId || !playerId) return;
     const channel: RealtimeChannel = supabase
@@ -92,7 +94,6 @@ export default function PlayerGame() {
     return () => { supabase.removeChannel(channel); };
   }, [currentQ, gameId, playerId]);
 
-  // Local countdown timer
   useEffect(() => {
     if (gameStatus !== "active" || selectedOption !== null || timeExpired) return;
     setTimeLeft(QUESTION_TIME);
@@ -110,10 +111,10 @@ export default function PlayerGame() {
   }, [currentQ, gameStatus]);
 
   const handleAnswer = useCallback(async (optionIndex: number) => {
-    if (selectedOption !== null || timeExpired || !gameId || !playerId) return;
+    if (selectedOption !== null || timeExpired || !gameId || !playerId || questions.length === 0) return;
     setSelectedOption(optionIndex);
 
-    const question = QUESTIONS[currentQ];
+    const question = questions[currentQ];
     const isCorrect = optionIndex === question.correct;
     setAnswerResult(isCorrect ? "correct" : "wrong");
 
@@ -123,7 +124,6 @@ export default function PlayerGame() {
     const timeRemaining = Math.max(0, QUESTION_TIME - timeElapsed);
     const points = isCorrect ? calculatePoints(timeRemaining, QUESTION_TIME) : 0;
 
-    // Save answer
     await supabase.from("player_answers").insert({
       player_id: playerId,
       game_id: gameId,
@@ -133,13 +133,12 @@ export default function PlayerGame() {
       points_earned: points,
     });
 
-    // Update player score
     if (isCorrect) {
       const newScore = totalScore + points;
       setTotalScore(newScore);
       await supabase.from("players").update({ score: newScore }).eq("id", playerId);
     }
-  }, [selectedOption, timeExpired, gameId, playerId, currentQ, questionStartedAt, totalScore]);
+  }, [selectedOption, timeExpired, gameId, playerId, currentQ, questionStartedAt, totalScore, questions]);
 
   if (gameStatus === "waiting") {
     return (
@@ -155,7 +154,8 @@ export default function PlayerGame() {
     );
   }
 
-  const question = QUESTIONS[currentQ];
+  const question = questions[currentQ];
+  if (!question) return null;
 
   return (
     <div className="min-h-screen bg-naija flex flex-col px-4 py-6">
@@ -165,7 +165,7 @@ export default function PlayerGame() {
           <span className="text-white font-bold text-sm">{playerName}</span>
         </div>
         <div className="text-white/70 text-sm font-medium">
-          Q {currentQ + 1}/{QUESTIONS.length}
+          Q {currentQ + 1}/{totalQuestions}
         </div>
         <div className="bg-white/20 rounded-xl px-3 py-1.5">
           <span className="text-gold font-black">{totalScore} pts</span>
