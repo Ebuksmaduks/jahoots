@@ -5,9 +5,11 @@ import { generateGameCode } from "@/lib/gameUtils";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CATEGORIES } from "@/lib/questions";
 
 export default function HostSetup() {
   const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -17,13 +19,17 @@ export default function HostSetup() {
       setError("Abeg enter your name!");
       return;
     }
+    if (!category) {
+      setError("Please select a category!");
+      return;
+    }
     setLoading(true);
     setError("");
     try {
       const code = generateGameCode();
       const { data, error: dbErr } = await supabase
         .from("games")
-        .insert({ code, host_name: name.trim(), status: "waiting" })
+        .insert({ code, host_name: name.trim(), status: "waiting", category })
         .select()
         .single();
 
@@ -46,7 +52,7 @@ export default function HostSetup() {
           Host a Game 🎤
         </h2>
         <p className="text-center text-muted-foreground mb-6 text-sm">
-          Enter your name to create a game room
+          Enter your name and pick a category
         </p>
 
         <div className="space-y-4">
@@ -58,6 +64,36 @@ export default function HostSetup() {
             className="text-center text-lg font-semibold h-12 border-2 border-primary/30 focus:border-primary"
             maxLength={20}
           />
+
+          {/* Category Selection */}
+          <div>
+            <p className="text-sm font-bold text-center mb-3" style={{ color: "#008753" }}>
+              Choose a Category 🎯
+            </p>
+            <div className="grid grid-cols-1 gap-2">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setCategory(cat.id)}
+                  className={`flex items-center gap-3 p-3 rounded-xl border-2 text-left transition-all font-semibold ${
+                    category === cat.id
+                      ? "border-primary bg-primary/10 text-primary"
+                      : "border-gray-200 hover:border-primary/50 hover:bg-gray-50"
+                  }`}
+                >
+                  <span className="text-2xl">{cat.emoji}</span>
+                  <div>
+                    <div className="font-bold text-sm">{cat.label}</div>
+                    <div className="text-xs text-muted-foreground font-normal">{cat.description}</div>
+                  </div>
+                  {category === cat.id && (
+                    <span className="ml-auto text-primary text-lg">✅</span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {error && (
             <p className="text-destructive text-sm text-center font-medium">{error}</p>
           )}
