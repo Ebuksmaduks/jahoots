@@ -13,7 +13,7 @@ export const QUESTIONS: Question[] = [
   {
     question: "'Joro' was a hit song by which artist?",
     options: ["Wizkid", "Davido", "Burna Boy", "Olamide"],
-    correct: 1,
+    correct: 0,
   },
   {
     question: "What does 'Ajebutter' mean in Nigerian Pidgin?",
