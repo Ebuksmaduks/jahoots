@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
-import { QUESTIONS } from "@/lib/questions";
+import { CATEGORY_QUESTIONS, CATEGORIES } from "@/lib/questions";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 
 interface Player {
@@ -18,6 +18,7 @@ export default function HostRoom() {
   const [gameCode, setGameCode] = useState("");
   const [starting, setStarting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [category, setCategory] = useState("nollywood");
 
   useEffect(() => {
     if (!gameId) return;
@@ -25,11 +26,11 @@ export default function HostRoom() {
     // Fetch game info
     supabase
       .from("games")
-      .select("code")
+      .select("code, category")
       .eq("id", gameId)
       .single()
       .then(({ data }) => {
-        if (data) setGameCode(data.code);
+        if (data) { setGameCode(data.code); setCategory(data.category ?? "nollywood"); }
       });
 
     // Fetch existing players
@@ -142,7 +143,7 @@ export default function HostRoom() {
         {/* Game Info */}
         <div className="bg-white/10 rounded-2xl p-4 mb-6 text-white text-center">
           <p className="text-sm font-medium opacity-80">
-            🎯 {QUESTIONS.length} questions • ⏱️ 15 seconds each
+            🎯 {CATEGORY_QUESTIONS[category]?.length ?? 10} questions • ⏱️ 15 seconds each • {CATEGORIES.find(c => c.id === category)?.emoji} {CATEGORIES.find(c => c.id === category)?.label}
           </p>
         </div>
 

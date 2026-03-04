@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       games: {
         Row: {
+          category: string
           code: string
           created_at: string
           current_question_index: number | null
@@ -25,6 +26,7 @@ export type Database = {
           status: string
         }
         Insert: {
+          category?: string
           code: string
           created_at?: string
           current_question_index?: number | null
@@ -34,6 +36,7 @@ export type Database = {
           status?: string
         }
         Update: {
+          category?: string
           code?: string
           created_at?: string
           current_question_index?: number | null
