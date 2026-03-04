@@ -3,7 +3,6 @@ export interface Question {
   options: string[];
   correct: number;
 }
-
 export interface Category {
   id: string;
   label: string;
@@ -81,7 +80,6 @@ export const CATEGORY_QUESTIONS: Record<string, Question[]> = {
     { question: "Nigeria first qualified for the FIFA World Cup in which year?", options: ["1990", "1994", "1998", "2002"], correct: 1 },
   ],
 };
-
 // Legacy export for backward compatibility
 export const QUESTIONS: Question[] = CATEGORY_QUESTIONS["nollywood"];
 
