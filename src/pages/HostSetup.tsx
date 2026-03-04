@@ -51,7 +51,7 @@ export default function HostSetup() {
 
         <div className="space-y-4">
           <Input
-            placeholder="Your name (e.g. Emeka, Amaka...)"
+            placeholder="Your name (e.g. Emeka, Funmi...)"
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleHost()}

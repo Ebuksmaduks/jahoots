@@ -9,7 +9,7 @@ export default function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
 
   return (
     <div className="flex items-center gap-3">
-      <img src={logoImg} alt="9jahoots" className={`${sizes[size]} w-auto object-contain`} />
+      <img src={logoImg} alt="9jahoot" className={`${sizes[size]} w-auto object-contain`} />
     </div>
   );
 }

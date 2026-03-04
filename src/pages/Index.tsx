@@ -36,11 +36,11 @@ export default function Index() {
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-8 text-center">
         <div className="animate-bounce-in">
           <p className="text-white/80 text-lg sm:text-xl font-semibold mb-2">
-            🇳🇬 The Naija Trivia Experience 🎮
+            🇳🇬 The 9ja Trivia Experience 🎮
           </p>
           <h1 className="text-3xl sm:text-5xl font-black text-white leading-tight mb-4">
             Oya, test your{" "}
-            <span className="text-gold">Naija knowledge!</span>
+            <span className="text-gold">9ja knowledge!</span>
           </h1>
           <p className="text-white/70 text-base sm:text-lg max-w-lg mx-auto mb-10">
             Compete with your friends in real-time Nollywood, music, culture trivia. Who sabi pass? 🔥
@@ -114,7 +114,7 @@ export default function Index() {
 
       {/* Footer */}
       <footer className="relative z-10 text-center pb-6">
-        <p className="text-white/40 text-sm">Made with ❤️ for Naija 🇳🇬</p>
+        <p className="text-white/40 text-sm">Made with ❤️ for 9ja </p>
       </footer>
     </div>
   );
