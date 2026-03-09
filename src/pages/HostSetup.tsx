@@ -6,6 +6,7 @@ import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CATEGORIES } from "@/lib/questions";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 export default function HostSetup() {
   const [name, setName] = useState("");

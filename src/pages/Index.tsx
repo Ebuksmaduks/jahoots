@@ -8,7 +8,7 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-naija relative flex flex-col overflow-hidden">
-      <NigerianPatternBg />
+      <AnimatedBackground variant="home" />
 
       {/* Header */}
       <header className="relative z-10 flex items-center justify-center py-8 px-4">

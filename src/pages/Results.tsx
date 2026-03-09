@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Logo from "@/components/Logo";
 import Confetti from "@/components/Confetti";
 import { Button } from "@/components/ui/button";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 interface Player {
   id: string;

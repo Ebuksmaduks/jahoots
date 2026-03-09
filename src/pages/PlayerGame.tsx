@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_QUESTIONS, OPTION_LABELS, OPTION_COLORS, QUESTION_TIME, type Question } from "@/lib/questions";
 import { calculatePoints } from "@/lib/gameUtils";
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 type GameStatus = "waiting" | "active" | "finished";
 

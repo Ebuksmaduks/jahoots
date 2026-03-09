@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 export default function JoinGame() {
   const [searchParams] = useSearchParams();
