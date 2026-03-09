@@ -4,7 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 import Logo from "@/components/Logo";
 import Confetti from "@/components/Confetti";
 import { Button } from "@/components/ui/button";
-import AnimatedBackground from "@/components/AnimatedBackground";
 
 interface Player {
   id: string;
@@ -32,10 +31,9 @@ export default function Results() {
   const rest = players.slice(3);
 
   return (
-    <div className="min-h-screen bg-naija relative flex flex-col items-center justify-center px-4 py-8 overflow-hidden">
-      <AnimatedBackground variant="results" />
+    <div className="min-h-screen bg-naija flex flex-col items-center justify-center px-4 py-8">
       <Confetti />
-      <div className="w-full max-w-2xl relative z-10">
+      <div className="w-full max-w-2xl">
         <div className="flex justify-center mb-4">
           <Logo size="sm" />
         </div>

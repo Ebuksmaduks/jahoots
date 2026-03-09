@@ -4,7 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_QUESTIONS, OPTION_LABELS, OPTION_COLORS, CATEGORIES, type Question } from "@/lib/questions";
 import Timer from "@/components/Timer";
 import type { RealtimeChannel } from "@supabase/supabase-js";
-import AnimatedBackground from "@/components/AnimatedBackground";
 
 interface Player {
   id: string;
@@ -103,9 +102,8 @@ export default function HostGame() {
 
   if (showLeaderboard) {
     return (
-      <div className="min-h-screen bg-naija relative flex flex-col items-center justify-center px-4 py-8 overflow-hidden">
-        <AnimatedBackground variant="host-game" />
-        <div className="w-full max-w-2xl relative z-10">
+      <div className="min-h-screen bg-naija flex flex-col items-center justify-center px-4 py-8">
+        <div className="w-full max-w-2xl">
           <h2 className="text-4xl font-black text-white text-center mb-2">
             Leaderboard 🏆
           </h2>
@@ -142,8 +140,7 @@ export default function HostGame() {
   }
 
   return (
-    <div className="min-h-screen bg-naija relative flex flex-col px-4 py-8 overflow-hidden">
-      <AnimatedBackground variant="host-game" />
+    <div className="min-h-screen bg-naija flex flex-col px-4 py-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6 max-w-4xl mx-auto w-full">
         <div className="bg-white/20 rounded-xl px-4 py-2">
