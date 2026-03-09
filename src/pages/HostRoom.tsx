@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { CATEGORY_QUESTIONS, CATEGORIES } from "@/lib/questions";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { QRCodeSVG } from "qrcode.react";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 interface Player {
   id: string;
