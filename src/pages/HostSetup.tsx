@@ -44,8 +44,9 @@ export default function HostSetup() {
   };
 
   return (
-    <div className="min-h-screen bg-naija flex flex-col items-center justify-center px-4 py-12">
-      <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md animate-bounce-in">
+    <div className="min-h-screen bg-naija relative flex flex-col items-center justify-center px-4 py-12 overflow-hidden">
+      <AnimatedBackground variant="host-setup" />
+      <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md animate-bounce-in relative z-10">
         <div className="flex justify-center mb-6">
           <Logo size="md" />
         </div>
