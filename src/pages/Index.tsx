@@ -1,24 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
-
-const NigerianPatternBg = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {[...Array(12)].map((_, i) => (
-      <div
-        key={i}
-        className="absolute rounded-full opacity-10"
-        style={{
-          width: `${60 + Math.random() * 100}px`,
-          height: `${60 + Math.random() * 100}px`,
-          left: `${(i * 8.3) % 100}%`,
-          top: `${(i * 13.7) % 100}%`,
-          background: i % 2 === 0 ? "#FFD700" : "#fff",
-        }}
-      />
-    ))}
-  </div>
-);
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 export default function Index() {
   const navigate = useNavigate();
