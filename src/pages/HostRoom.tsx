@@ -5,6 +5,7 @@ import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { CATEGORY_QUESTIONS, CATEGORIES } from "@/lib/questions";
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import { QRCodeSVG } from "qrcode.react";
 
 interface Player {
   id: string;
