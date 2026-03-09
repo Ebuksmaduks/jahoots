@@ -103,8 +103,9 @@ export default function HostGame() {
 
   if (showLeaderboard) {
     return (
-      <div className="min-h-screen bg-naija flex flex-col items-center justify-center px-4 py-8">
-        <div className="w-full max-w-2xl">
+      <div className="min-h-screen bg-naija relative flex flex-col items-center justify-center px-4 py-8 overflow-hidden">
+        <AnimatedBackground variant="host-game" />
+        <div className="w-full max-w-2xl relative z-10">
           <h2 className="text-4xl font-black text-white text-center mb-2">
             Leaderboard 🏆
           </h2>
