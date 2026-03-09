@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_QUESTIONS, OPTION_LABELS, OPTION_COLORS, CATEGORIES, type Question } from "@/lib/questions";
 import Timer from "@/components/Timer";
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 interface Player {
   id: string;
