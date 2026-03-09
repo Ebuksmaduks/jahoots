@@ -12,6 +12,7 @@ import JoinGame from "./pages/JoinGame";
 import PlayerGame from "./pages/PlayerGame";
 import Results from "./pages/Results";
 import PlayerResults from "./pages/PlayerResults";
+import BackgroundMusic from "./components/BackgroundMusic";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      <BackgroundMusic />
     </TooltipProvider>
   </QueryClientProvider>
 );

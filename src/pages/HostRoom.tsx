@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { CATEGORY_QUESTIONS, CATEGORIES } from "@/lib/questions";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { QRCodeSVG } from "qrcode.react";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 interface Player {
   id: string;
@@ -90,8 +91,9 @@ export default function HostRoom() {
   const naija_emojis = ["🎉", "🔥", "💪", "✨", "🇳🇬", "🎵", "🌟"];
 
   return (
-    <div className="min-h-screen bg-naija flex flex-col items-center justify-center px-4 py-8">
-      <div className="w-full max-w-2xl">
+    <div className="min-h-screen bg-naija relative flex flex-col items-center justify-center px-4 py-8 overflow-hidden">
+      <AnimatedBackground variant="host-room" />
+      <div className="w-full max-w-2xl relative z-10">
         <div className="flex justify-center mb-6">
           <Logo size="md" />
         </div>

@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_QUESTIONS, OPTION_LABELS, OPTION_COLORS, QUESTION_TIME, type Question } from "@/lib/questions";
 import { calculatePoints } from "@/lib/gameUtils";
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import AnimatedBackground from "@/components/AnimatedBackground";
 
 type GameStatus = "waiting" | "active" | "finished";
 
@@ -142,11 +143,12 @@ export default function PlayerGame() {
 
   if (gameStatus === "waiting") {
     return (
-      <div className="min-h-screen bg-naija flex flex-col items-center justify-center px-4 text-center">
-        <div className="text-6xl mb-4 animate-bounce">⏳</div>
-        <h2 className="text-3xl font-black text-white mb-2">Waiting room</h2>
-        <p className="text-white/70 text-lg mb-4">Waiting for host to start the game...</p>
-        <div className="bg-white/20 rounded-2xl px-6 py-3">
+      <div className="min-h-screen bg-naija relative flex flex-col items-center justify-center px-4 text-center overflow-hidden">
+        <AnimatedBackground variant="player-waiting" />
+        <div className="text-6xl mb-4 animate-bounce relative z-10">⏳</div>
+        <h2 className="text-3xl font-black text-white mb-2 relative z-10">Waiting room</h2>
+        <p className="text-white/70 text-lg mb-4 relative z-10">Waiting for host to start the game...</p>
+        <div className="bg-white/20 rounded-2xl px-6 py-3 relative z-10">
           <span className="text-white font-bold text-lg">You are: </span>
           <span className="text-gold font-black text-xl">{playerName}</span>
         </div>
@@ -158,7 +160,8 @@ export default function PlayerGame() {
   if (!question) return null;
 
   return (
-    <div className="min-h-screen bg-naija flex flex-col px-4 py-6">
+    <div className="min-h-screen bg-naija relative flex flex-col px-4 py-6 overflow-hidden">
+      <AnimatedBackground variant="player-game" />
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="bg-white/20 rounded-xl px-3 py-1.5">
