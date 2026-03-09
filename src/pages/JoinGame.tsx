@@ -6,8 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function JoinGame() {
+  const [searchParams] = useSearchParams();
+  const prefilledCode = searchParams.get("code")?.toUpperCase() ?? "";
   const [name, setName] = useState("");
-  const [code, setCode] = useState("");
+  const [code, setCode] = useState(prefilledCode);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -54,25 +56,39 @@ export default function JoinGame() {
           Join a Game 📱
         </h2>
         <p className="text-center text-muted-foreground mb-6 text-sm">
-          Enter the game code from the host screen
+          {prefilledCode
+            ? `You're joining game ${prefilledCode} — just enter your name! 🎉`
+            : "Enter the game code from the host screen"}
         </p>
 
         <div className="space-y-4">
           <Input
-            placeholder="Your name"
+            placeholder="Your display name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleJoin()}
             className="text-center text-lg font-semibold h-12 border-2 border-primary/30 focus:border-primary"
             maxLength={20}
+            autoFocus
           />
-          <Input
-            placeholder="Game Code (e.g. AB12CD)"
-            value={code}
-            onChange={(e) => setCode(e.target.value.toUpperCase())}
-            onKeyDown={(e) => e.key === "Enter" && handleJoin()}
-            className="text-center text-2xl font-black tracking-widest h-14 border-2 border-primary/30 focus:border-primary uppercase"
-            maxLength={6}
-          />
+          {/* Show code input only if not pre-filled via link */}
+          {!prefilledCode && (
+            <Input
+              placeholder="Game Code (e.g. AB12CD)"
+              value={code}
+              onChange={(e) => setCode(e.target.value.toUpperCase())}
+              onKeyDown={(e) => e.key === "Enter" && handleJoin()}
+              className="text-center text-2xl font-black tracking-widest h-14 border-2 border-primary/30 focus:border-primary uppercase"
+              maxLength={6}
+            />
+          )}
+          {prefilledCode && (
+            <div className="text-center py-2">
+              <span className="bg-primary/10 text-primary font-black text-3xl tracking-[0.2em] px-6 py-3 rounded-2xl border-2 border-primary/30 inline-block">
+                {prefilledCode}
+              </span>
+            </div>
+          )}
           {error && (
             <p className="text-destructive text-sm text-center font-medium">{error}</p>
           )}

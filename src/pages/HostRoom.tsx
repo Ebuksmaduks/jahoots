@@ -71,8 +71,18 @@ export default function HostRoom() {
     navigate(`/host-game/${gameId}`);
   };
 
+  const joinUrl = gameCode
+    ? `${window.location.origin}/join?code=${gameCode}`
+    : "";
+
   const copyCode = () => {
     navigator.clipboard.writeText(gameCode);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(joinUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -86,27 +96,64 @@ export default function HostRoom() {
           <Logo size="md" />
         </div>
 
-        {/* Game Code Card */}
-        <div className="bg-white rounded-3xl shadow-2xl p-8 mb-6 text-center">
-          <p className="text-muted-foreground font-semibold mb-2">Share this code with players</p>
-          <div
-            className="text-7xl font-black tracking-[0.2em] mb-4 cursor-pointer select-all"
-            style={{ color: "#008753" }}
-            onClick={copyCode}
-          >
-            {gameCode}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={copyCode}
-            className="border-2 border-primary text-primary font-bold"
-          >
-            {copied ? "✅ Copied!" : "📋 Copy Code"}
-          </Button>
-          <p className="text-xs text-muted-foreground mt-3">
-            Players go to this site and click "Join Game" 📱
+        {/* Game Code + QR Card */}
+        <div className="bg-white rounded-3xl shadow-2xl p-8 mb-6">
+          <p className="text-muted-foreground font-semibold text-center mb-4">
+            Share this with players to join instantly 🚀
           </p>
+
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            {/* QR Code */}
+            <div className="flex flex-col items-center gap-2 shrink-0">
+              <div className="p-3 bg-white border-4 border-primary rounded-2xl shadow-md">
+                {joinUrl && (
+                  <QRCodeSVG
+                    value={joinUrl}
+                    size={140}
+                    fgColor="#008753"
+                    bgColor="#ffffff"
+                    level="M"
+                  />
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground font-medium">Scan to join</p>
+            </div>
+
+            {/* Code + link */}
+            <div className="flex-1 text-center sm:text-left w-full">
+              <p className="text-xs text-muted-foreground font-semibold mb-1">Game Code</p>
+              <div
+                className="text-5xl font-black tracking-[0.2em] mb-3 cursor-pointer select-all"
+                style={{ color: "#008753" }}
+                onClick={copyCode}
+              >
+                {gameCode}
+              </div>
+
+              <p className="text-xs text-muted-foreground font-semibold mb-1">Direct Link</p>
+              <div className="bg-primary/5 rounded-xl px-3 py-2 mb-3 border border-primary/20 break-all text-xs font-mono text-primary select-all">
+                {joinUrl}
+              </div>
+
+              <div className="flex gap-2 justify-center sm:justify-start">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={copyCode}
+                  className="border-2 border-primary text-primary font-bold"
+                >
+                  {copied ? "✅ Copied!" : "📋 Copy Code"}
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={copyLink}
+                  className="bg-primary text-primary-foreground font-bold"
+                >
+                  🔗 Copy Link
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Players List */}
