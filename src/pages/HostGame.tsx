@@ -142,7 +142,8 @@ export default function HostGame() {
   }
 
   return (
-    <div className="min-h-screen bg-naija flex flex-col px-4 py-8">
+    <div className="min-h-screen bg-naija relative flex flex-col px-4 py-8 overflow-hidden">
+      <AnimatedBackground variant="host-game" />
       {/* Header */}
       <div className="flex items-center justify-between mb-6 max-w-4xl mx-auto w-full">
         <div className="bg-white/20 rounded-xl px-4 py-2">
