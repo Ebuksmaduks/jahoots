@@ -32,9 +32,10 @@ export default function Results() {
   const rest = players.slice(3);
 
   return (
-    <div className="min-h-screen bg-naija flex flex-col items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-naija relative flex flex-col items-center justify-center px-4 py-8 overflow-hidden">
+      <AnimatedBackground variant="results" />
       <Confetti />
-      <div className="w-full max-w-2xl">
+      <div className="w-full max-w-2xl relative z-10">
         <div className="flex justify-center mb-4">
           <Logo size="sm" />
         </div>
