@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
+import { useAudio } from "@/contexts/AudioContext";
 
 const NigerianPatternBg = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -22,6 +24,9 @@ const NigerianPatternBg = () => (
 
 export default function Index() {
   const navigate = useNavigate();
+  const { setMode } = useAudio();
+
+  useEffect(() => { setMode("lobby"); }, []);
 
   return (
     <div className="min-h-screen bg-naija relative flex flex-col overflow-hidden">

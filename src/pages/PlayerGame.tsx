@@ -4,12 +4,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_QUESTIONS, OPTION_LABELS, OPTION_COLORS, QUESTION_TIME, type Question } from "@/lib/questions";
 import { calculatePoints } from "@/lib/gameUtils";
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import { useAudio } from "@/contexts/AudioContext";
 
 type GameStatus = "waiting" | "active" | "finished";
 
 export default function PlayerGame() {
   const { gameId, playerId } = useParams<{ gameId: string; playerId: string }>();
   const navigate = useNavigate();
+  const { setMode, playCorrect, playWrong, playTimeUp } = useAudio();
 
   const [gameStatus, setGameStatus] = useState<GameStatus>("waiting");
   const [currentQ, setCurrentQ] = useState(0);
@@ -22,6 +24,19 @@ export default function PlayerGame() {
   const [timeLeft, setTimeLeft] = useState(QUESTION_TIME);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [totalQuestions, setTotalQuestions] = useState(10);
+
+  // Lobby music while waiting; game music while active
+  useEffect(() => {
+    if (gameStatus === "waiting") setMode("lobby");
+    else if (gameStatus === "active") setMode("game");
+  }, [gameStatus]);
+
+  // Switch to countdown music in last 5 seconds
+  useEffect(() => {
+    if (gameStatus !== "active" || selectedOption !== null || timeExpired) return;
+    if (timeLeft <= 5 && timeLeft > 0) setMode("countdown");
+    else if (timeLeft > 5) setMode("game");
+  }, [timeLeft, gameStatus, selectedOption, timeExpired]);
 
   useEffect(() => {
     if (!gameId || !playerId) return;
@@ -102,6 +117,7 @@ export default function PlayerGame() {
         if (prev <= 1) {
           clearInterval(interval);
           setTimeExpired(true);
+          playTimeUp();
           return 0;
         }
         return prev - 1;
@@ -117,6 +133,9 @@ export default function PlayerGame() {
     const question = questions[currentQ];
     const isCorrect = optionIndex === question.correct;
     setAnswerResult(isCorrect ? "correct" : "wrong");
+
+    if (isCorrect) playCorrect();
+    else playWrong();
 
     const timeElapsed = questionStartedAt
       ? (Date.now() - new Date(questionStartedAt).getTime()) / 1000
@@ -138,7 +157,7 @@ export default function PlayerGame() {
       setTotalScore(newScore);
       await supabase.from("players").update({ score: newScore }).eq("id", playerId);
     }
-  }, [selectedOption, timeExpired, gameId, playerId, currentQ, questionStartedAt, totalScore, questions]);
+  }, [selectedOption, timeExpired, gameId, playerId, currentQ, questionStartedAt, totalScore, questions, playCorrect, playWrong]);
 
   if (gameStatus === "waiting") {
     return (

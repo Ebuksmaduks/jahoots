@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useAudio } from "@/contexts/AudioContext";
 import { supabase } from "@/integrations/supabase/client";
 import Confetti from "@/components/Confetti";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,9 @@ export default function PlayerResults() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [myRank, setMyRank] = useState(0);
   const [myScore, setMyScore] = useState(0);
+  const { setMode } = useAudio();
+
+  useEffect(() => { setMode("results"); }, []);
 
   useEffect(() => {
     if (!gameId || !playerId) return;

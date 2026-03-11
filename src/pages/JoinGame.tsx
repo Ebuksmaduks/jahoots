@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAudio } from "@/contexts/AudioContext";
 
 export default function JoinGame() {
   const [searchParams] = useSearchParams();
   const prefilledCode = searchParams.get("code")?.toUpperCase() ?? "";
+  const { setMode } = useAudio();
+  useEffect(() => { setMode("lobby"); }, []);
   const [name, setName] = useState("");
   const [code, setCode] = useState(prefilledCode);
   const [loading, setLoading] = useState(false);

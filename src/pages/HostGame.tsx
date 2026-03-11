@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_QUESTIONS, OPTION_LABELS, OPTION_COLORS, CATEGORIES, type Question } from "@/lib/questions";
 import Timer from "@/components/Timer";
 import type { RealtimeChannel } from "@supabase/supabase-js";
+import { useAudio } from "@/contexts/AudioContext";
 
 interface Player {
   id: string;
@@ -14,6 +15,7 @@ interface Player {
 export default function HostGame() {
   const { gameId } = useParams<{ gameId: string }>();
   const navigate = useNavigate();
+  const { setMode } = useAudio();
   const [currentQ, setCurrentQ] = useState(0);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [players, setPlayers] = useState<Player[]>([]);
@@ -22,6 +24,9 @@ export default function HostGame() {
   const [gameCode, setGameCode] = useState("");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [categoryLabel, setCategoryLabel] = useState("");
+
+  // Switch between game and countdown music based on timer state
+  useEffect(() => { setMode(timerRunning ? "game" : "silent"); }, [timerRunning]);
 
   useEffect(() => {
     if (!gameId) return;

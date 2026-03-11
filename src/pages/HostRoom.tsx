@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { CATEGORY_QUESTIONS, CATEGORIES } from "@/lib/questions";
 import type { RealtimeChannel } from "@supabase/supabase-js";
 import { QRCodeSVG } from "qrcode.react";
+import { useAudio } from "@/contexts/AudioContext";
 
 interface Player {
   id: string;
@@ -15,11 +16,14 @@ interface Player {
 export default function HostRoom() {
   const { gameId } = useParams<{ gameId: string }>();
   const navigate = useNavigate();
+  const { setMode } = useAudio();
   const [players, setPlayers] = useState<Player[]>([]);
   const [gameCode, setGameCode] = useState("");
   const [starting, setStarting] = useState(false);
   const [copied, setCopied] = useState(false);
   const [category, setCategory] = useState("nollywood");
+
+  useEffect(() => { setMode("lobby"); }, []);
 
   useEffect(() => {
     if (!gameId) return;

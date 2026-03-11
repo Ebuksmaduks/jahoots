@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { generateGameCode } from "@/lib/gameUtils";
@@ -6,8 +6,11 @@ import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CATEGORIES } from "@/lib/questions";
+import { useAudio } from "@/contexts/AudioContext";
 
 export default function HostSetup() {
+  const { setMode } = useAudio();
+  useEffect(() => { setMode("lobby"); }, []);
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
   const [loading, setLoading] = useState(false);
