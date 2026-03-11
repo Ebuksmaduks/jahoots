@@ -13,6 +13,7 @@ import PlayerGame from "./pages/PlayerGame";
 import Results from "./pages/Results";
 import PlayerResults from "./pages/PlayerResults";
 import MusicPlayer from "./components/MusicPlayer";
+import { AudioProvider } from "./contexts/AudioContext";
 
 const queryClient = new QueryClient();
 
@@ -22,18 +23,20 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <MusicPlayer />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/host" element={<HostSetup />} />
-          <Route path="/host/:gameId" element={<HostRoom />} />
-          <Route path="/host-game/:gameId" element={<HostGame />} />
-          <Route path="/join" element={<JoinGame />} />
-          <Route path="/play/:gameId/:playerId" element={<PlayerGame />} />
-          <Route path="/results/:gameId" element={<Results />} />
-          <Route path="/player-results/:gameId/:playerId" element={<PlayerResults />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AudioProvider>
+          <MusicPlayer />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/host" element={<HostSetup />} />
+            <Route path="/host/:gameId" element={<HostRoom />} />
+            <Route path="/host-game/:gameId" element={<HostGame />} />
+            <Route path="/join" element={<JoinGame />} />
+            <Route path="/play/:gameId/:playerId" element={<PlayerGame />} />
+            <Route path="/results/:gameId" element={<Results />} />
+            <Route path="/player-results/:gameId/:playerId" element={<PlayerResults />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AudioProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
