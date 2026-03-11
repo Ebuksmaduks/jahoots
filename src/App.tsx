@@ -12,6 +12,7 @@ import JoinGame from "./pages/JoinGame";
 import PlayerGame from "./pages/PlayerGame";
 import Results from "./pages/Results";
 import PlayerResults from "./pages/PlayerResults";
+import MusicPlayer from "./components/MusicPlayer";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <MusicPlayer />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/host" element={<HostSetup />} />
