@@ -117,6 +117,7 @@ export default function PlayerGame() {
         if (prev <= 1) {
           clearInterval(interval);
           setTimeExpired(true);
+          playTimeUp();
           return 0;
         }
         return prev - 1;
@@ -132,6 +133,9 @@ export default function PlayerGame() {
     const question = questions[currentQ];
     const isCorrect = optionIndex === question.correct;
     setAnswerResult(isCorrect ? "correct" : "wrong");
+
+    if (isCorrect) playCorrect();
+    else playWrong();
 
     const timeElapsed = questionStartedAt
       ? (Date.now() - new Date(questionStartedAt).getTime()) / 1000
@@ -153,7 +157,7 @@ export default function PlayerGame() {
       setTotalScore(newScore);
       await supabase.from("players").update({ score: newScore }).eq("id", playerId);
     }
-  }, [selectedOption, timeExpired, gameId, playerId, currentQ, questionStartedAt, totalScore, questions]);
+  }, [selectedOption, timeExpired, gameId, playerId, currentQ, questionStartedAt, totalScore, questions, playCorrect, playWrong]);
 
   if (gameStatus === "waiting") {
     return (
