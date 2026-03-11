@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useAudio } from "@/contexts/AudioContext";
 import { supabase } from "@/integrations/supabase/client";
 import Confetti from "@/components/Confetti";
 import { Button } from "@/components/ui/button";

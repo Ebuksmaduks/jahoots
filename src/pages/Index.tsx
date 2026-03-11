@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
+import { useAudio } from "@/contexts/AudioContext";
 
 const NigerianPatternBg = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
