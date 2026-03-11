@@ -22,6 +22,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <MusicPlayer />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/host" element={<HostSetup />} />
