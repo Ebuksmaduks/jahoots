@@ -24,6 +24,9 @@ const NigerianPatternBg = () => (
 
 export default function Index() {
   const navigate = useNavigate();
+  const { setMode } = useAudio();
+
+  useEffect(() => { setMode("lobby"); }, []);
 
   return (
     <div className="min-h-screen bg-naija relative flex flex-col overflow-hidden">

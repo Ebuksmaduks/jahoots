@@ -16,6 +16,9 @@ export default function Results() {
   const { gameId } = useParams<{ gameId: string }>();
   const navigate = useNavigate();
   const [players, setPlayers] = useState<Player[]>([]);
+  const { setMode } = useAudio();
+
+  useEffect(() => { setMode("results"); }, []);
 
   useEffect(() => {
     if (!gameId) return;

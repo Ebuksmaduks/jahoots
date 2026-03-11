@@ -17,6 +17,9 @@ export default function PlayerResults() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [myRank, setMyRank] = useState(0);
   const [myScore, setMyScore] = useState(0);
+  const { setMode } = useAudio();
+
+  useEffect(() => { setMode("results"); }, []);
 
   useEffect(() => {
     if (!gameId || !playerId) return;
