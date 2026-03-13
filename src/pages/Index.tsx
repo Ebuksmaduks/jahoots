@@ -24,8 +24,7 @@ const NigerianPatternBg = () => (
 
 export default function Index() {
   const navigate = useNavigate();
-  const { setMode } = useAudio();
-
+   const { setMode } = useAudio();
   useEffect(() => { setMode("lobby"); }, []);
 
   return (
@@ -48,7 +47,7 @@ export default function Index() {
             <span className="text-gold">9ja knowledge!</span>
           </h1>
           <p className="text-white/70 text-base sm:text-lg max-w-lg mx-auto mb-10">
-            Compete with your friends in real-time Nollywood, music, culture trivia. Who sabi pass? 🔥
+            Compete with your friends for real-time - Nollywood, music, culture trivia. Who sabi pass? 🔥
           </p>
 
           {/* Main CTAs */}
@@ -95,12 +94,12 @@ export default function Index() {
 
       {/* How it works */}
       <section className="relative z-10 px-4 pb-12 max-w-3xl mx-auto w-full">
-        <h2 className="text-white font-black text-2xl text-center mb-6">How e work? 🤔</h2>
+        <h2 className="text-white font-black text-2xl text-center mb-6">How e dey work? 🤔</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
-            { icon: "🎤", step: "1", title: "Host creates game", desc: "Get a 6-character code to share" },
-            { icon: "📱", step: "2", title: "Players join", desc: "Enter code on your phone" },
-            { icon: "🏆", step: "3", title: "Compete!", desc: "Answer fast, score high!" },
+            { icon: "🎤", step: "1", title: "Host go create game", desc: "Collect 6-letter code make you share" },
+            { icon: "📱", step: "2", title: "Players go join", desc: "Enter di code for your phone" },
+            { icon: "🏆", step: "3", title: "una go Compete!", desc: "no dull, Answer sharp, make your score high!" },
           ].map((item) => (
             <div
               key={item.step}

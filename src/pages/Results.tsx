@@ -17,9 +17,8 @@ export default function Results() {
   const navigate = useNavigate();
   const [players, setPlayers] = useState<Player[]>([]);
   const { setMode } = useAudio();
-
   useEffect(() => { setMode("results"); }, []);
-
+  
   useEffect(() => {
     if (!gameId) return;
     supabase

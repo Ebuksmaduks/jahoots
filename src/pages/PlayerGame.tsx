@@ -4,7 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { CATEGORY_QUESTIONS, OPTION_LABELS, OPTION_COLORS, QUESTION_TIME, type Question } from "@/lib/questions";
 import { calculatePoints } from "@/lib/gameUtils";
 import type { RealtimeChannel } from "@supabase/supabase-js";
-import { useAudio } from "@/contexts/AudioContext";
 
 type GameStatus = "waiting" | "active" | "finished";
 
@@ -30,7 +29,6 @@ export default function PlayerGame() {
     if (gameStatus === "waiting") setMode("lobby");
     else if (gameStatus === "active") setMode("game");
   }, [gameStatus]);
-
   // Switch to countdown music in last 5 seconds
   useEffect(() => {
     if (gameStatus !== "active" || selectedOption !== null || timeExpired) return;
@@ -158,7 +156,6 @@ export default function PlayerGame() {
       await supabase.from("players").update({ score: newScore }).eq("id", playerId);
     }
   }, [selectedOption, timeExpired, gameId, playerId, currentQ, questionStartedAt, totalScore, questions, playCorrect, playWrong]);
-
   if (gameStatus === "waiting") {
     return (
       <div className="min-h-screen bg-naija flex flex-col items-center justify-center px-4 text-center">

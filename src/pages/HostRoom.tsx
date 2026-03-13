@@ -17,6 +17,7 @@ export default function HostRoom() {
   const { gameId } = useParams<{ gameId: string }>();
   const navigate = useNavigate();
   const { setMode } = useAudio();
+
   const [players, setPlayers] = useState<Player[]>([]);
   const [gameCode, setGameCode] = useState("");
   const [starting, setStarting] = useState(false);
@@ -74,10 +75,10 @@ export default function HostRoom() {
       .eq("id", gameId);
     navigate(`/host-game/${gameId}`);
   };
-
   const joinUrl = gameCode
     ? `${window.location.origin}/join?code=${gameCode}`
     : "";
+
 
   const copyCode = () => {
     navigator.clipboard.writeText(gameCode);
@@ -100,12 +101,11 @@ export default function HostRoom() {
           <Logo size="md" />
         </div>
 
-        {/* Game Code + QR Card */}
+         {/* Game Code + QR Card */}
         <div className="bg-white rounded-3xl shadow-2xl p-8 mb-6">
           <p className="text-muted-foreground font-semibold text-center mb-4">
-            Share this with players to join instantly 🚀
+            Oya Share am with players make them join sharperly 🚀
           </p>
-
           <div className="flex flex-col sm:flex-row items-center gap-6">
             {/* QR Code */}
             <div className="flex flex-col items-center gap-2 shrink-0">
@@ -122,7 +122,6 @@ export default function HostRoom() {
               </div>
               <p className="text-xs text-muted-foreground font-medium">Scan to join</p>
             </div>
-
             {/* Code + link */}
             <div className="flex-1 text-center sm:text-left w-full">
               <p className="text-xs text-muted-foreground font-semibold mb-1">Game Code</p>
@@ -133,12 +132,10 @@ export default function HostRoom() {
               >
                 {gameCode}
               </div>
-
               <p className="text-xs text-muted-foreground font-semibold mb-1">Direct Link</p>
               <div className="bg-primary/5 rounded-xl px-3 py-2 mb-3 border border-primary/20 break-all text-xs font-mono text-primary select-all">
                 {joinUrl}
               </div>
-
               <div className="flex gap-2 justify-center sm:justify-start">
                 <Button
                   variant="outline"
@@ -158,13 +155,14 @@ export default function HostRoom() {
               </div>
             </div>
           </div>
+
         </div>
 
         {/* Players List */}
         <div className="bg-white rounded-3xl shadow-2xl p-6 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-black" style={{ color: "#008753" }}>
-              Players Waiting 👥
+              Players dey wait 👥
             </h3>
             <span className="bg-primary text-primary-foreground text-sm font-bold px-3 py-1 rounded-full">
               {players.length} joined
@@ -174,8 +172,8 @@ export default function HostRoom() {
           {players.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               <div className="text-4xl mb-2">⏳</div>
-              <p className="font-medium">Waiting for players to join...</p>
-              <p className="text-sm">Share the code above!</p>
+              <p className="font-medium">Wait make dem join...</p>
+              <p className="text-sm">Share the code wey dey up!</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -208,7 +206,7 @@ export default function HostRoom() {
             color: "#000",
           }}
         >
-          {starting ? "Starting..." : players.length === 0 ? "Wait for players to join..." : "🚀 Start Game!"}
+          {starting ? "Starting..." : players.length === 0 ? "Wait make players join..." : "🚀 Start Game!"}
         </Button>
       </div>
     </div>

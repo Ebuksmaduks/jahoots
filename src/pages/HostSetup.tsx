@@ -6,7 +6,6 @@ import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CATEGORIES } from "@/lib/questions";
-import { useAudio } from "@/contexts/AudioContext";
 
 export default function HostSetup() {
   const { setMode } = useAudio();
@@ -23,7 +22,7 @@ export default function HostSetup() {
       return;
     }
     if (!category) {
-      setError("Please select a category!");
+      setError("Abeg select a category!");
       return;
     }
     setLoading(true);
@@ -39,7 +38,7 @@ export default function HostSetup() {
       if (dbErr) throw dbErr;
       navigate(`/host/${data.id}`);
     } catch (e: any) {
-      setError("Something went wrong. Try again!");
+      setError("Something don go wrong. Try am again!");
     } finally {
       setLoading(false);
     }
@@ -52,10 +51,10 @@ export default function HostSetup() {
           <Logo size="md" />
         </div>
         <h2 className="text-2xl font-black text-center mb-1" style={{ color: "#008753" }}>
-          Host a Game 🎤
+          Host di Game 🎤
         </h2>
         <p className="text-center text-muted-foreground mb-6 text-sm">
-          Enter your name and pick a category
+          Enter your name make you choose category
         </p>
 
         <div className="space-y-4">
@@ -71,7 +70,7 @@ export default function HostSetup() {
           {/* Category Selection */}
           <div>
             <p className="text-sm font-bold text-center mb-3" style={{ color: "#008753" }}>
-              Choose a Category 🎯
+              Choose Category 🎯
             </p>
             <div className="grid grid-cols-1 gap-2">
               {CATEGORIES.map((cat) => (

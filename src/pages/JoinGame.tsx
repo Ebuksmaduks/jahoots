@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,7 @@ import { useAudio } from "@/contexts/AudioContext";
 
 export default function JoinGame() {
   const [searchParams] = useSearchParams();
-  const prefilledCode = searchParams.get("code")?.toUpperCase() ?? "";
+  const prefilledCode = searchParams.get("code")?.toUpperCase() ?? "";  
   const { setMode } = useAudio();
   useEffect(() => { setMode("lobby"); }, []);
   const [name, setName] = useState("");
@@ -56,17 +56,17 @@ export default function JoinGame() {
           <Logo size="md" />
         </div>
         <h2 className="text-2xl font-black text-center mb-1" style={{ color: "#008753" }}>
-          Join a Game 📱
+          Join di Game 📱
         </h2>
         <p className="text-center text-muted-foreground mb-6 text-sm">
           {prefilledCode
             ? `You're joining game ${prefilledCode} — just enter your name! 🎉`
-            : "Enter the game code from the host screen"}
+            : "Enter game code wey dey di host screen"}
         </p>
 
         <div className="space-y-4">
           <Input
-            placeholder="Your display name"
+            placeholder="Your name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleJoin()}
